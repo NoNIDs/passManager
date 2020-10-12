@@ -11,6 +11,18 @@ $boxShadow: 0px 0px 25px rgba(0, 0, 0, 0.616);
 body {
   color: $textColor;
   background-color: $black;
+  overflow: hidden;
+}
+h1 {
+  font-size: 3rem;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-large {
+  height: 3rem;
+  display: flex;
+  align-items: center;
 }
 
 .loader-container {
@@ -59,7 +71,7 @@ body {
 }
 // AUTH PAGE
 .auth-container {
-  width: 40%;
+  width: 40vw;
   height: 60vh;
   display: flex;
   align-items: center;
@@ -67,6 +79,7 @@ body {
   background-color: $black;
   margin: 5rem auto;
   box-shadow: $boxShadow;
+  padding: 3rem;
   & .auth-helper {
     margin-top: 2rem;
   }
@@ -136,11 +149,20 @@ body {
     flex-direction: column;
     margin-left: 1rem;
     font-size: 1rem;
+
     & .item-website {
       font-weight: 700;
+      text-overflow: ellipsis; /* will make [...] at the end */
+      width: 12rem;
+      white-space: nowrap; /* paragraph to one line */
+      overflow: hidden; /* older browsers */
     }
     & .item-username {
       color: $light;
+      text-overflow: ellipsis; /* will make [...] at the end */
+      width: 20rem;
+      white-space: nowrap; /* paragraph to one line */
+      overflow: hidden; /* older browsers */
     }
   }
 }
@@ -158,10 +180,11 @@ body {
   }
   &-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 20rem;
     & button {
       width: 9rem;
+      margin-left: 1rem;
     }
   }
 }
@@ -195,7 +218,7 @@ body {
       display: flex;
       align-items: center;
       & .show-icon {
-        margin-left: 2rem;
+        margin: 0 2rem;
         color: $gray;
         transition: $transition;
         &:hover {
@@ -252,4 +275,81 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 1500px) {
+  .password-list-item {
+    .item-info {
+      .item-website {
+        width: 12rem;
+      }
+      .item-username {
+        width: 12rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .auth-container {
+    width: 50vw;
+  }
+  .dashboard-container {
+    grid-template-columns: 30% 1fr;
+  }
+  .sort-panel-container {
+    padding-top: 1rem;
+    padding-bottom: 0.2rem;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  html {
+    font-size: 12px;
+  }
+  .navbar-container .logo {
+    padding-left: 1rem;
+  }
+  .dashboard-container {
+    grid-template-columns: 40% 1fr;
+  }
+  .password-panel-header-buttons {
+    justify-content: space-around;
+    & button {
+      font-size: 0.7rem;
+      width: 6rem;
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .auth-container {
+    width: 80vw;
+  }
+  .navbar-container {
+    flex-direction: column;
+    padding: 1rem;
+    height: 8rem;
+    & .logo {
+      padding-top: 1rem;
+    }
+  }
+  .dashboard-container {
+    grid-template-areas: "list" "panel";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .sort-panel-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .create-btn-container {
+    width: 100vw;
+  }
+  .sort-panel-container .sort-panel-block .sort-select {
+    margin-left: 4rem;
+    margin-top: 2rem;
+  }
 }

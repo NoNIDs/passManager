@@ -1,10 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
+import useClippy from "use-clippy";
+
 import { DashboardContext } from "../../context/dashboard.context";
 
 import { dateFormatter } from "./dateFormatUtil";
 
+import { useMessage } from "../../hooks/message.hook";
+
 function PasswordPanel() {
   const dashboard = useContext(DashboardContext);
+
+  const [clipboard, setClipboard] = useClippy(); // copy hook
+  const message = useMessage();
 
   const [currentItemDate, setCurrentItemDate] = useState({
     date_created: "",
@@ -67,7 +74,8 @@ function PasswordPanel() {
     }
   };
 
-  const handleCloseCreate = () => {
+  const handleCloseCreateOrEdit = () => {
+    setForm(dashboard.currentItem);
     dashboard.setViewStatus();
   };
 
@@ -151,9 +159,29 @@ function PasswordPanel() {
               Password
             </label>
           </div>
-          <i className="material-icons show-icon" onClick={handleShowPassword}>
-            {passwordShow ? "visibility_off" : "visibility"}
-          </i>
+          {form.password ? (
+            <i
+              className="material-icons show-icon"
+              onClick={handleShowPassword}
+            >
+              {passwordShow ? "visibility_off" : "visibility"}
+            </i>
+          ) : (
+            ""
+          )}
+          {form.password && !dashboard.createStatus && !dashboard.editStatus ? (
+            <button
+              className="waves-effect waves-light btn grey darken-2"
+              onClick={() => {
+                setClipboard(form.password);
+                message("Password copied");
+              }}
+            >
+              Copy
+            </button>
+          ) : (
+            ""
+          )}
         </div>
         {dashboard.editStatus || dashboard.createStatus ? (
           <div className="details-edit-buttons">
@@ -165,7 +193,7 @@ function PasswordPanel() {
             </button>
             <button
               className="waves-effect waves-light btn"
-              onClick={handleCloseCreate}
+              onClick={handleCloseCreateOrEdit}
             >
               Cancel
             </button>
