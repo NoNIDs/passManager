@@ -23,8 +23,9 @@ router.post(
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
+        console.log(errors);
         return res.status(400).json({
-          message: "Incorrect credentials for registration",
+          message: errors.array()[0].msg, // first error message in stack
           errors: errors.array(), // to array
         });
       }

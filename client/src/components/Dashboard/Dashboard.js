@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect, useContext } from "react";
 
 import { AuthContext } from "../../context/auth.context";
@@ -17,29 +18,41 @@ import PasswordPanel from "./PasswordPanel";
 import Loader from "../Loader";
 
 function Dashboard() {
+  // state status
   const [editStatus, setEditStatus] = useState(false);
   const [createStatus, setCreateStatus] = useState(false);
   const [deleteTrigger, setDeleteTrigger] = useState(false);
 
+  // sort value
   const [sortValue, setSortValue] = useState("website");
 
+  // data state
   const [currentItem, setCurrentItem] = useState("");
   const [passwords, setPasswords] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  const { token } = useContext(AuthContext);
+  // auth context
+  const { token, logout } = useContext(AuthContext);
 
+  // message - notification func
   const message = useMessage();
 
   useEffect(() => {
     if (token) {
-      getPasswords(token, sortValue).then((passwords) => {
-        setPasswords(passwords);
-        setLoading(false);
-      });
+      getPasswords(token, sortValue)
+        .then((passwords) => {
+          setPasswords(passwords);
+          setLoading(false);
+        })
+        .catch((errStatus) => {
+          if (errStatus === 401) {
+            logout(); // logout when token was expired
+          }
+        });
     }
   }, [createStatus, editStatus, token, deleteTrigger, sortValue]);
 
+  // edit status
   const handleEdit = () => {
     setViewStatus();
     setEditStatus(!editStatus);
@@ -55,19 +68,23 @@ function Dashboard() {
     });
   };
 
+  // view status
   const setViewStatus = () => {
     setCreateStatus(false);
     setEditStatus(false);
   };
 
+  // set sort value
   const handleSortValue = (sort) => {
     if (sort !== sortValue) setSortValue(sort);
   };
 
+  // set current item
   const handleSetCurrentItem = (obj) => {
     setCurrentItem(obj);
   };
 
+  // create query to API
   const onCreate = (obj) => {
     createPassword(obj)
       .then((res) => {
@@ -85,6 +102,7 @@ function Dashboard() {
       });
   };
 
+  // edit query to API
   const onEdit = (obj) => {
     editPassword(obj)
       .then((res) => {
@@ -95,6 +113,7 @@ function Dashboard() {
       .catch((err) => message(err));
   };
 
+  // delete query to API
   const onDelete = () => {
     deletePassword(currentItem._id)
       .then((res) => {

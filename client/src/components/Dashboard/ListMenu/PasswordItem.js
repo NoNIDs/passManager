@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useContext, useEffect } from "react";
 import { DashboardContext } from "../../../context/dashboard.context";
 

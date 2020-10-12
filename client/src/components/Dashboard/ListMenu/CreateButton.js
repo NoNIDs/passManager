@@ -9,7 +9,7 @@ function CreateButton() {
         className="waves-effect waves-light btn-large"
         onClick={dashboard.handleCreate}
       >
-        Create new login
+        Add new entry
       </button>
     </div>
   );

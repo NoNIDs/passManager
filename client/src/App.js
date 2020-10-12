@@ -11,7 +11,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 
 import { AuthContext } from "./context/auth.context";
 import { useAuth } from "./hooks/auth.hook";

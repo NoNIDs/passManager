@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useContext, useEffect } from "react";
 import useClippy from "use-clippy";
 
@@ -13,30 +14,37 @@ function PasswordPanel() {
   const [clipboard, setClipboard] = useClippy(); // copy hook
   const message = useMessage();
 
+  // initial value for date state
   const [currentItemDate, setCurrentItemDate] = useState({
     date_created: "",
     date_modified: "",
   });
 
+  // current form state
   const [form, setForm] = useState({
     website: "",
     username: "",
     password: "",
   });
 
+  // password visibility state
   const [passwordShow, setPasswordShow] = useState(false);
 
+  // current title in header block
   const [itemTitle, setItemTitle] = useState("");
 
   useEffect(() => {
     if (dashboard.currentItem) {
       setForm(dashboard.currentItem);
+
+      // set title
       if (dashboard.createStatus) {
-        setItemTitle("Create new login");
+        setItemTitle("Create new entry");
       } else {
         let title = dashboard.currentItem.website.replace(/https?:\/\//, "");
         setItemTitle(title);
       }
+
       // changing date for view
       if (!dashboard.createStatus && dashboard.currentItem.website !== "") {
         setCurrentItemDate({
@@ -58,10 +66,12 @@ function PasswordPanel() {
     setPasswordShow(false);
   }, [dashboard.currentItem]);
 
+  // change handler for data state
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
+  // set password visibility
   const handleShowPassword = (event) => {
     event.preventDefault();
     let passwordInput = document.getElementsByName("password");
@@ -74,15 +84,19 @@ function PasswordPanel() {
     }
   };
 
+  // set status state (Dashboard)
   const handleCloseCreateOrEdit = () => {
     setForm(dashboard.currentItem);
     dashboard.setViewStatus();
   };
 
-  const onCreateOrEditItem = () => {
+  // form submit handler
+  const handleSumbit = (e) => {
+    e.preventDefault();
     if (dashboard.createStatus) dashboard.onCreate(form);
     if (dashboard.editStatus) dashboard.onEdit(form);
   };
+
   return (
     <div className="password-panel-container">
       <div className="password-panel-header">
@@ -108,7 +122,7 @@ function PasswordPanel() {
           ""
         )}
       </div>
-      <div className="password-panel-details">
+      <form className="password-panel-details" onSubmit={handleSumbit}>
         <div className="details-site-name">
           <div className="input-field col s6">
             <input
@@ -185,10 +199,7 @@ function PasswordPanel() {
         </div>
         {dashboard.editStatus || dashboard.createStatus ? (
           <div className="details-edit-buttons">
-            <button
-              className="waves-effect waves-light btn"
-              onClick={onCreateOrEditItem}
-            >
+            <button type="submit" className="waves-effect waves-light btn">
               Save
             </button>
             <button
@@ -201,6 +212,7 @@ function PasswordPanel() {
         ) : (
           ""
         )}
+
         {!dashboard.createStatus && form.website !== "" ? (
           <div className="details-info">
             <p>Created: {currentItemDate.date_created}</p>
@@ -209,7 +221,7 @@ function PasswordPanel() {
         ) : (
           ""
         )}
-      </div>
+      </form>
     </div>
   );
 }

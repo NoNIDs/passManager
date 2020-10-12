@@ -20,7 +20,9 @@ function AuthPage() {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
-  const registerHandler = () => {
+  const registerHandler = (e) => {
+    e.preventDefault();
+
     const headers = { "Content-Type": "application/json" };
     axios
       .post("/api/auth/register", { ...form }, headers)
@@ -39,36 +41,38 @@ function AuthPage() {
   return (
     <div className="auth-container">
       <h1 className="auth-container-title">Sign Up</h1>
-      <div className="input-field">
-        <input
-          placeholder="Enter your email"
-          id="email"
-          type="email"
-          name="email"
-          className="validate"
-          value={form.email}
-          onChange={changeHandler}
-        />
-        <label htmlFor="email">Email</label>
-      </div>
-      <div className="input-field">
-        <input
-          placeholder="Enter your password"
-          id="password"
-          type="password"
-          name="password"
-          className="validate"
-          value={form.password}
-          onChange={changeHandler}
-        />
-        <label htmlFor="password">Password</label>
-      </div>
-      <button
-        className="waves-effect waves-light deep-purple accent-4 btn-large"
-        onClick={registerHandler}
-      >
-        Register
-      </button>
+      <form onSubmit={registerHandler}>
+        <div className="input-field">
+          <input
+            placeholder="Enter your email"
+            id="email"
+            type="email"
+            name="email"
+            className="validate"
+            value={form.email}
+            onChange={changeHandler}
+          />
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="input-field">
+          <input
+            placeholder="Enter your password"
+            id="password"
+            type="password"
+            name="password"
+            className="validate"
+            value={form.password}
+            onChange={changeHandler}
+          />
+          <label htmlFor="password">Password</label>
+        </div>
+        <button
+          type="submit"
+          className="waves-effect waves-light deep-purple accent-4 btn-large"
+        >
+          Register
+        </button>
+      </form>
       <span className="auth-helper">
         Already have an account? <Link to="/login">Sign in</Link>{" "}
       </span>

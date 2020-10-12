@@ -6,12 +6,6 @@ export const useAuth = () => {
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
-  const [ready, setReady] = useState(false);
-
-  //without token
-  //   if (!localStorage.getItem(storageName)) {
-  //     setReady(true);
-  //   }
 
   const login = useCallback((jwtToken, id, email) => {
     setToken(jwtToken);
@@ -36,9 +30,7 @@ export const useAuth = () => {
     const data = JSON.parse(localStorage.getItem(storageName));
     if (data && data.token && data.email) {
       login(data.token, data.userId, data.email);
-
-      setReady(true);
     }
   }, [login]);
-  return { token, userId, email, login, logout, ready };
+  return { token, userId, email, login, logout };
 };

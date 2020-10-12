@@ -1,23 +1,25 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
 
-const storageName = "userStorage";
-
 axiosRetry(axios, { retries: 3 });
 
 // get passwords query
-export const getPasswords = async (token, sortValue) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  try {
-    let response = await axios.get(`/api/pass/?sort=${sortValue}`, config);
-    return response.data;
-  } catch (err) {}
-};
+export const getPasswords = (token, sortValue) =>
+  new Promise((resolve, reject) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .get(`/api/pass/?sort=${sortValue}`, config)
+      .then((res) => resolve(res.data))
+      .catch((err) => {
+        reject(err.response.status);
+      });
+  });
 
 // create password query
 export const createPassword = (obj) =>
@@ -57,7 +59,7 @@ export const deletePassword = (id) =>
 // Setup config with token - helper func
 const getConfig = () => {
   // Get token from state
-  const token = JSON.parse(localStorage.getItem(storageName)).token;
+  const token = JSON.parse(localStorage.getItem("userStorage")).token;
   // Headers
   const config = {
     headers: {

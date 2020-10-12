@@ -28,7 +28,7 @@ function SortPanel() {
           </select>
         </div>
       </div>
-      <div className="passwords-count-details">{dashboard.count} logins</div>
+      <div className="passwords-count-details">{dashboard.count} entries</div>
     </div>
   );
 }

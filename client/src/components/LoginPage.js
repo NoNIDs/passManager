@@ -20,7 +20,9 @@ function AuthPage() {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
-  const loginHandler = () => {
+  const loginHandler = (e) => {
+    e.preventDefault();
+
     const headers = { "Content-Type": "application/json" };
     axios
       .post("/api/auth/login", { ...form }, headers)
@@ -37,37 +39,39 @@ function AuthPage() {
   return (
     <div className="auth-container">
       <h1 className="auth-container-title">Sign In</h1>
-      <div className="input-field">
-        <input
-          placeholder="Enter your email"
-          id="email"
-          type="email"
-          name="email"
-          className="validate"
-          value={form.email}
-          onChange={changeHandler}
-        />
-        <label htmlFor="email">Email</label>
-      </div>
-      <div className="input-field">
-        <input
-          placeholder="Enter your password"
-          id="password"
-          type="password"
-          name="password"
-          className="validate"
-          value={form.password}
-          onChange={changeHandler}
-        />
-        <label htmlFor="password">Password</label>
-      </div>
+      <form onSubmit={loginHandler}>
+        <div className="input-field">
+          <input
+            placeholder="Enter your email"
+            id="email"
+            type="email"
+            name="email"
+            className="validate"
+            value={form.email}
+            onChange={changeHandler}
+          />
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="input-field">
+          <input
+            placeholder="Enter your password"
+            id="password"
+            type="password"
+            name="password"
+            className="validate"
+            value={form.password}
+            onChange={changeHandler}
+          />
+          <label htmlFor="password">Password</label>
+        </div>
 
-      <button
-        className="waves-effect waves-light deep-purple accent-4 btn-large"
-        onClick={loginHandler}
-      >
-        Login
-      </button>
+        <button
+          type="submit"
+          className="waves-effect waves-light deep-purple accent-4 btn-large"
+        >
+          Login
+        </button>
+      </form>
       <span className="auth-helper">
         Don't have an account? <Link to="/register">Sign Up</Link>{" "}
       </span>

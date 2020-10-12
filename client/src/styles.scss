@@ -23,6 +23,12 @@ h1 {
   height: 3rem;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+.select-dropdown {
+  color: $gray;
+  font-size: 1rem !important;
+  margin-bottom: 0 !important;
 }
 
 .loader-container {
@@ -80,6 +86,11 @@ h1 {
   margin: 5rem auto;
   box-shadow: $boxShadow;
   padding: 3rem;
+  & form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   & .auth-helper {
     margin-top: 2rem;
   }
@@ -87,7 +98,6 @@ h1 {
     text-align: center;
   }
   & .input-field {
-    width: 60%;
     margin: 2rem 0 !important;
     & input {
       color: $textColor;
