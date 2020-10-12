@@ -3,6 +3,9 @@
 Password manager is a storage used to store / add / edit / delete passwords.
 
 Manual:
+
+---
+
 `npm run prod` - build the app in production mode (http://localhost:8000)
 
 ---
