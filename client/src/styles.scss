@@ -1,0 +1,255 @@
+$black: #212121;
+$deepPurple: #512da8;
+$accent: #00bcd4;
+$textColor: #ffffff;
+$light: #d1c4e9;
+$gray: #757575;
+
+$transition: all 0.3s ease-out;
+$boxShadow: 0px 0px 25px rgba(0, 0, 0, 0.616);
+
+body {
+  color: $textColor;
+  background-color: $black;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.dropdown-content {
+  background-color: darken($black, 5%);
+}
+.navbar-container {
+  height: 6rem;
+  width: 100%;
+  background-color: $black;
+  box-shadow: 0px -10px 30px rgba(0, 0, 0, 0.616);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & .logo {
+    flex-grow: 6;
+    display: flex;
+    padding-left: 5rem;
+    & span {
+      font-size: 1.5rem;
+      color: $deepPurple;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5rem;
+    }
+  }
+  & .user-menu {
+    flex-grow: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .user-details {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      & .user-icon {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+// AUTH PAGE
+.auth-container {
+  width: 40%;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: $black;
+  margin: 5rem auto;
+  box-shadow: $boxShadow;
+  & .auth-helper {
+    margin-top: 2rem;
+  }
+  &-title {
+    text-align: center;
+  }
+  & .input-field {
+    width: 60%;
+    margin: 2rem 0 !important;
+    & input {
+      color: $textColor;
+      font-size: 1rem !important;
+    }
+    & label {
+      font-size: 1rem !important;
+    }
+    &:first-child {
+      margin-top: 4rem !important;
+    }
+  }
+}
+
+// DASHBOARD PAGE
+.dashboard-container {
+  display: grid;
+  grid-template-areas: "list panel";
+  grid-template-rows: 1fr;
+  grid-template-columns: 25% 1fr;
+  height: calc(100vh - 6rem);
+  & .password-list-container {
+    display: grid;
+    grid-template-areas: "sort" "passwords" "button";
+    grid-template-rows: 5% 1fr 10%;
+    grid-template-columns: 1fr;
+    position: relative;
+    grid-area: list;
+    box-shadow: -6px 23px 25px rgba(0, 0, 0, 0.616);
+    height: calc(100vh - 6rem);
+  }
+  & .password-panel-container {
+    grid-area: panel;
+    display: grid;
+    grid-template-areas: "panel_header" "panel_details";
+    grid-template-rows: 10% 1fr;
+    grid-template-columns: 1fr;
+    padding: 3rem;
+    height: calc(100vh - 6rem);
+  }
+}
+
+// PASSWORD LIST
+.password-list-item {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  border-inline-start: 5px solid transparent;
+  &:hover {
+    cursor: pointer;
+    background-color: darken($black, 5%);
+  }
+  &.active-item {
+    border-left: 5px solid $accent;
+  }
+  & .item-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+    font-size: 1rem;
+    & .item-website {
+      font-weight: 700;
+    }
+    & .item-username {
+      color: $light;
+    }
+  }
+}
+
+.password-panel-header {
+  grid-area: panel_header;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & .site-name {
+    font-size: 2.5rem;
+  }
+  &-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 20rem;
+    & button {
+      width: 9rem;
+    }
+  }
+}
+.password-panel-details {
+  grid-area: panel_details;
+  padding-top: 3rem;
+  display: grid;
+  grid-template-areas: "website" "username" "password" "buttons" "details";
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5%) 5% 1fr;
+  & .input-field {
+    width: 40%;
+    & label {
+      color: $gray !important;
+      font-size: 1.2rem;
+    }
+    & input {
+      color: $light !important;
+      font-size: 1.5rem;
+    }
+  }
+  & .details {
+    &-site-name {
+      grid-area: website;
+    }
+    &-username {
+      grid-area: username;
+    }
+    &-password {
+      grid-area: password;
+      display: flex;
+      align-items: center;
+      & .show-icon {
+        margin-left: 2rem;
+        color: $gray;
+        transition: $transition;
+        &:hover {
+          cursor: pointer;
+          color: $accent;
+        }
+      }
+    }
+    &-edit-buttons {
+      grid-area: buttons;
+      display: flex;
+      align-items: center;
+      & button {
+        margin-right: 1rem;
+      }
+    }
+    &-info {
+      grid-area: details;
+    }
+  }
+}
+
+.sort-panel-container {
+  grid-area: sort;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  color: $gray;
+  & .sort-panel-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    & .sort-select {
+      width: 60%;
+      margin-left: 1rem;
+    }
+  }
+  & .passwords-count-details {
+    width: 7rem;
+  }
+}
+
+.password-list {
+  grid-area: passwords;
+  margin: 1rem 0;
+  border-top: 1px solid $gray;
+  border-bottom: 1px solid $gray;
+  overflow-y: scroll;
+}
+
+.create-btn-container {
+  grid-area: button;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -22,8 +22,7 @@ router.post(
   async (req, res) => {
     try {
       const errors = validationResult(req);
-
-      if (!error.isEmpty()) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
           message: "Incorrect credentials for registration",
           errors: errors.array(), // to array
@@ -40,10 +39,15 @@ router.post(
 
       const hashedPassword = await bcrypt.hash(password, 12);
       const user = new User({ email, password: hashedPassword });
-
       await user.save();
 
-      res.status(201).json({ message: "User was created" });
+      const token = jwt.sign(
+        { userId: user.id },
+        config.get("jwtSecret"),
+        { expiresIn: "1h" } // the token will exist for 1 hour
+      );
+
+      res.status(201).json({ userId: user.id, email: user.email, token });
     } catch (error) {
       res
         .status(500)
@@ -52,7 +56,7 @@ router.post(
   }
 );
 
-//Authorization API - api/auth/login
+//Login API - api/auth/login
 
 router.post(
   "/login",
@@ -64,7 +68,7 @@ router.post(
     try {
       const errors = validationResult(req);
 
-      if (!error.isEmpty()) {
+      if (!errors.isEmpty()) {
         return res.status(400).json({
           message: "Uncorrect credentials for authorization",
           errors: errors.array(), // to array
@@ -93,7 +97,7 @@ router.post(
         { expiresIn: "1h" } // the token will exist for 1 hour
       );
 
-      res.json({ token, userId: user.id });
+      res.json({ userId: user.id, email: user.email, token });
     } catch (error) {
       res
         .status(500)
