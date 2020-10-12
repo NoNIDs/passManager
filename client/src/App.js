@@ -11,7 +11,6 @@ import PrivateRoute from "./routes/PrivateRoute";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Loader from "./components/Loader";
 import Navbar from "./components/Navbar/Navbar";
 
 import { AuthContext } from "./context/auth.context";
@@ -21,7 +20,7 @@ import "materialize-css";
 import "./styles.scss";
 
 function App() {
-  const { token, userId, email, login, logout, ready } = useAuth(); // custom hook
+  const { token, userId, email, login, logout } = useAuth(); // custom hook
   const [isAuthenticated, setAuthenticated] = useState(!!token);
 
   useEffect(() => {
@@ -44,7 +43,7 @@ function App() {
               component={Dashboard}
               isAuthenticated={isAuthenticated}
             />
-            {isAuthenticated && <Redirect to="/dashboard" />}
+            <Redirect to="/dashboard" />
           </Switch>
         </div>
       </Router>

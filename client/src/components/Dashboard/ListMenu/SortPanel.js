@@ -7,16 +7,24 @@ function SortPanel() {
     window.M.AutoInit();
   });
 
+  const handleChangeSortValue = () => {
+    let select = document.getElementById("select_sort_value");
+    let sort_value = Array.from(select.options).filter(
+      (option) => option.selected
+    )[0].value;
+    dashboard.handleSortValue(sort_value);
+  };
+
   return (
     <div className="sort-panel-container">
       <div className="sort-panel-block">
         <span>Sort by:</span>
         <div className="input-field col s12 sort-select">
-          <select>
-            <option value="name">Name(A-Z)</option>
-            <option value="-name">Name(Z-A)</option>
-            <option value="last_created">Last created</option>
-            <option value="last_modified">Last modified</option>
+          <select id="select_sort_value" onChange={handleChangeSortValue}>
+            <option value="website">Name(A-Z)</option>
+            <option value="-website">Name(Z-A)</option>
+            <option value="-date_created">Last created</option>
+            <option value="-date_modified">Last modified</option>
           </select>
         </div>
       </div>

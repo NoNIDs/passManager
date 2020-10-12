@@ -11,7 +11,7 @@ router.get("/", auth, async (req, res) => {
   try {
     const sort = req.query.sort;
     const passwords = await Password.find({ owner: req.user.userId }).sort(
-      `sort`
+      `${sort}`
     );
     res.json(passwords);
   } catch (e) {

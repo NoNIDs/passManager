@@ -19,22 +19,29 @@ function PasswordPanel() {
 
   const [passwordShow, setPasswordShow] = useState(false);
 
+  const [itemTitle, setItemTitle] = useState("");
+
   useEffect(() => {
     if (dashboard.currentItem) {
       setForm(dashboard.currentItem);
+      if (dashboard.createStatus) {
+        setItemTitle("Create new login");
+      } else {
+        let title = dashboard.currentItem.website.replace(/https?:\/\//, "");
+        setItemTitle(title);
+      }
+      // changing date for view
+      if (!dashboard.createStatus && dashboard.currentItem.website !== "") {
+        setCurrentItemDate({
+          date_created: dateFormatter(dashboard.currentItem.date_created),
+          date_modified: dateFormatter(dashboard.currentItem.date_modified),
+        });
+      }
 
       //set active class first item in list(current)
       const listLabel = document.getElementsByClassName("details-label");
       for (let item of listLabel) {
         item.classList.add("active");
-      }
-
-      // changing date for view
-      if (!dashboard.createStatus) {
-        setCurrentItemDate({
-          date_created: dateFormatter(dashboard.currentItem.date_created),
-          date_modified: dateFormatter(dashboard.currentItem.date_modified),
-        });
       }
     }
 
@@ -71,7 +78,7 @@ function PasswordPanel() {
   return (
     <div className="password-panel-container">
       <div className="password-panel-header">
-        <div className="site-name">Test site name</div>
+        <div className="site-name">{itemTitle}</div>
         {!dashboard.createStatus && form.website !== "" ? (
           <div className="password-panel-header-buttons">
             <button
@@ -144,9 +151,9 @@ function PasswordPanel() {
               Password
             </label>
           </div>
-          <a className="material-icons show-icon" onClick={handleShowPassword}>
+          <i className="material-icons show-icon" onClick={handleShowPassword}>
             {passwordShow ? "visibility_off" : "visibility"}
-          </a>
+          </i>
         </div>
         {dashboard.editStatus || dashboard.createStatus ? (
           <div className="details-edit-buttons">

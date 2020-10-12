@@ -1,7 +1,10 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 
 const storageName = "userStorage";
-const message = () => {};
+
+axiosRetry(axios, { retries: 3 });
+
 // get passwords query
 export const getPasswords = async (token, sortValue) => {
   const config = {
@@ -46,7 +49,9 @@ export const deletePassword = (id) =>
     axios
       .delete(`/api/pass/delete/${id}`, getConfig())
       .then((res) => resolve(res.data.message))
-      .catch((err) => message(err.response.data.message));
+      .catch((err) => {
+        reject(err.response.data.message);
+      });
   });
 
 // Setup config with token - helper func

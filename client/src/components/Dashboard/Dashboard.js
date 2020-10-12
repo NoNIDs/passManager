@@ -14,16 +14,18 @@ import {
 
 import PasswordList from "./ListMenu/PasswordList";
 import PasswordPanel from "./PasswordPanel";
+import Loader from "../Loader";
 
 function Dashboard() {
   const [editStatus, setEditStatus] = useState(false);
   const [createStatus, setCreateStatus] = useState(false);
   const [deleteTrigger, setDeleteTrigger] = useState(false);
 
-  const [sortValue, setSortValue] = useState("-website");
+  const [sortValue, setSortValue] = useState("website");
 
   const [currentItem, setCurrentItem] = useState("");
   const [passwords, setPasswords] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   const { token } = useContext(AuthContext);
 
@@ -31,9 +33,10 @@ function Dashboard() {
 
   useEffect(() => {
     if (token) {
-      getPasswords(token, sortValue).then((passwords) =>
-        setPasswords(passwords)
-      );
+      getPasswords(token, sortValue).then((passwords) => {
+        setPasswords(passwords);
+        setLoading(false);
+      });
     }
   }, [createStatus, editStatus, token, deleteTrigger, sortValue]);
 
@@ -58,7 +61,7 @@ function Dashboard() {
   };
 
   const handleSortValue = (sort) => {
-    setSortValue(sort);
+    if (sort !== sortValue) setSortValue(sort);
   };
 
   const handleSetCurrentItem = (obj) => {
@@ -87,7 +90,6 @@ function Dashboard() {
       .then((res) => {
         message("Password was edited successfully");
         setEditStatus(false);
-        console.log(res);
         setCurrentItem(res);
       })
       .catch((err) => message(err));
@@ -100,16 +102,15 @@ function Dashboard() {
         setDeleteTrigger(!deleteTrigger);
         let obj = passwords.find((obj) => obj._id === currentItem._id);
         let index = passwords.indexOf(obj);
-        if (index === passwords.length - 1)
+        if (index === passwords.length - 1 && index !== 0) {
           setCurrentItem(passwords[index - 1]);
-        else if (index === 0 && passwords.length === 1) {
+        } else if (index === 0 && passwords.length === 1) {
           setCurrentItem({
             website: "",
             username: "",
             password: "",
           });
-        } else if (index === 0) setCurrentItem(passwords[1]);
-        else setCurrentItem(passwords[index + 1]);
+        } else setCurrentItem(passwords[index + 1]);
       })
       .catch((err) => message(err));
   };
@@ -131,10 +132,14 @@ function Dashboard() {
         onDelete,
       }}
     >
-      <div className="dashboard-container">
-        <PasswordList list={passwords} />
-        <PasswordPanel />
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="dashboard-container">
+          <PasswordList list={passwords} />
+          <PasswordPanel />
+        </div>
+      )}
     </DashboardContext.Provider>
   );
 }

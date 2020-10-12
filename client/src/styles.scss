@@ -14,9 +14,9 @@ body {
 }
 
 .loader-container {
-  display: flex;
-  justify-content: center;
-  padding-top: 2rem;
+  position: absolute;
+  top: 40%;
+  left: 50%;
 }
 
 .dropdown-content {
