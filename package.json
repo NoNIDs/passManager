@@ -5,17 +5,16 @@
   "main": "app.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^5.3.0",
     "config": "^3.3.2",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.9"
+    "mongoose": "^5.10.9",
+    "nodemon": "^2.0.6"
   },
-  "devDependencies": {
-    "concurrently": "^5.3.0",
-    "nodemon": "^2.0.4"
-  },
+  "devDependencies": {},
   "scripts": {
     "server:prod": "cross-env NODE_ENV=production nodemon app.js",
     "server": "nodemon app.js",
