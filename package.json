@@ -17,9 +17,7 @@
   "devDependencies": {},
   "scripts": {
     "server:prod": "cross-env NODE_ENV=production nodemon app.js",
-    "start-client": "npm run start --prefix client",
-    "build": "npm run build --prefix client",
-    "install": "npm i --prefix ./client",
+    "heroku-postbuild": "cd client && npm install && npm run build"
     "start": "npm run server:prod"
   },
   "author": "Cheban Konstantin <vaysbergrest@gmail.com>",
