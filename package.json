@@ -17,13 +17,10 @@
   "devDependencies": {},
   "scripts": {
     "server:prod": "cross-env NODE_ENV=production nodemon app.js",
-    "server": "nodemon app.js",
-    "client": "npm run start --prefix client",
-    "client:build": "npm run build --prefix client",
-    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-    "prod": "concurrently \"npm run client:build\" \"npm run server:prod\"",
+    "start-client": "npm run start --prefix client",
+    "build": "npm run build --prefix client",
     "install": "npm i --prefix ./client",
-    "start": "concurrently \"npm run client:build\" \"npm run server:prod\""
+    "start": "npm run server:prod"
   },
   "author": "Cheban Konstantin <vaysbergrest@gmail.com>",
   "license": "ISC"
