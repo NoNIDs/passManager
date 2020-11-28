@@ -8,13 +8,16 @@ $gray: #757575;
 $transition: all 0.3s ease-out;
 $boxShadow: 0px 0px 25px rgba(0, 0, 0, 0.616);
 
+html {
+  overflow-x: hidden;
+}
 body {
   color: $textColor;
   background-color: $black;
   overflow: hidden;
 }
 h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin: 0;
   padding: 0;
 }
@@ -77,8 +80,8 @@ h1 {
 }
 // AUTH PAGE
 .auth-container {
-  width: 40vw;
-  height: 60vh;
+  width: 50vw;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -87,12 +90,14 @@ h1 {
   box-shadow: $boxShadow;
   padding: 3rem;
   & form {
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
   & .auth-helper {
     margin-top: 2rem;
+    text-align: center;
   }
   &-title {
     text-align: center;
@@ -122,7 +127,7 @@ h1 {
   & .password-list-container {
     display: grid;
     grid-template-areas: "sort" "passwords" "button";
-    grid-template-rows: 5% 1fr 10%;
+    grid-template-rows: 7% 1fr 10%;
     grid-template-columns: 1fr;
     position: relative;
     grid-area: list;
@@ -334,7 +339,7 @@ h1 {
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   .auth-container {
     width: 80vw;
   }
@@ -347,6 +352,7 @@ h1 {
     }
   }
   .dashboard-container {
+    height: auto;
     grid-template-areas: "list" "panel";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
